@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ReelIntend Design System */
+
+@layer base {
+  :root {
+    --background: 230 25% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 25% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 25% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 230 25% 5%;
+
+    --secondary: 280 100% 65%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 230 20% 15%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 220 100% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --border: 230 20% 18%;
+    --input: 230 20% 12%;
+    --ring: 180 100% 50%;
+
+    --radius: 1rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(180deg, hsl(230 25% 5%), hsl(230 25% 3%));
+  }
+}
+
+/* Premium UI utilities restored */
+@layer utilities {
+
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  }
+
+  .glass-card {
+    background: hsl(230 25% 10% / 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(210 40% 98% / 0.08);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reel-container {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .reel-item {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
