@@ -13,9 +13,33 @@ app.get("/", (req, res) => {
 });
 
 /* reels API */
-app.get("/api/reels/:topic", async (req, res) => {
-  const topic = decodeURIComponent(req.params.topic).toLowerCase();
+ app.get("/api/reels/:topic", async (req, res) => {
+  const topic = req.params.topic;
   const pageToken = req.query.pageToken || "";
+
+  try {
+    const response = await axios.get(
+      "https://www.googleapis.com/youtube/v3/search",
+      {
+        params: {
+          key: process.env.YOUTUBE_API_KEY,
+          part: "snippet",
+          q: `${topic} tutorial shorts learning`,
+          type: "video",
+          videoDuration: "short",
+          maxResults: 10,
+          pageToken: pageToken,
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error fetching reels" });
+  }
+});
+
 
   /* Topic learning keyword mapping */
   const topicKeywords = {
@@ -70,7 +94,7 @@ app.get("/api/reels/:topic", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error fetching reels" });
   }
-});
+;
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
