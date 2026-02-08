@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { formatNumber } from "@/data/mockData";
-import { Heart, Bookmark, Share2, BadgeCheck } from "lucide-react";
+import { Heart, Bookmark, BadgeCheck } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
+
+const API_URL = "https://reelintend.onrender.com";
 
 /* Reel Card */
 const ReelCard = ({
@@ -17,7 +19,6 @@ const ReelCard = ({
   isMutedGlobal: boolean;
   setIsMutedGlobal: (v: boolean) => void;
 }) => {
-  const videoRef = useRef<HTMLIFrameElement>(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [likeCount, setLikeCount] = useState(reel.likes || 1000);
@@ -28,55 +29,51 @@ const ReelCard = ({
   };
 
   const handleSave = () => {
-  const saved = JSON.parse(localStorage.getItem("savedReels") || "[]");
+    const saved = JSON.parse(localStorage.getItem("savedReels") || "[]");
 
-  if (isSaved) {
-    const updated = saved.filter((r: any) => r.id !== reel.id);
-    localStorage.setItem("savedReels", JSON.stringify(updated));
-  } else {
-    saved.push(reel);
-    localStorage.setItem("savedReels", JSON.stringify(saved));
-  }
+    if (isSaved) {
+      const updated = saved.filter((r: any) => r.id !== reel.id);
+      localStorage.setItem("savedReels", JSON.stringify(updated));
+    } else {
+      saved.push(reel);
+      localStorage.setItem("savedReels", JSON.stringify(saved));
+    }
 
-  setIsSaved(!isSaved);
-};
+    setIsSaved(!isSaved);
+  };
 
   return (
     <div className="reel-item h-screen w-full relative flex-shrink-0 snap-start">
       <iframe
-        ref={videoRef}
         src={`${reel.videoUrl}?autoplay=${isActive ? 1 : 0}&mute=${isMutedGlobal ? 1 : 0}`}
         allow="autoplay; encrypted-media"
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Right Actions */}
+      {/* Right actions */}
       <div className="absolute right-4 bottom-32 flex flex-col items-center gap-5 z-10">
+        {/* Speaker */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsMutedGlobal(!isMutedGlobal);
+          }}
+          className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-white backdrop-blur-sm"
+        >
+          {isMutedGlobal ? "🔇" : "🔊"}
+        </button>
 
-  {/* Speaker */}
-  <button
-    onClick={(e) => {
-      e.stopPropagation();
-      setIsMutedGlobal(!isMutedGlobal);
-    }}
-    className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-white backdrop-blur-sm"
-  >
-    {isMutedGlobal ? "🔇" : "🔊"}
-  </button>
+        {/* Like */}
+        <button onClick={handleLike} className="flex flex-col items-center">
+          <Heart className={`w-6 h-6 ${isLiked ? "text-red-500" : "text-white"}`} />
+          <span className="text-xs text-white">{formatNumber(likeCount)}</span>
+        </button>
 
-  {/* Like */}
-  <button onClick={handleLike} className="flex flex-col items-center">
-    <Heart className={`w-6 h-6 ${isLiked ? "text-red-500" : "text-white"}`} />
-    <span className="text-xs text-white">{formatNumber(likeCount)}</span>
-  </button>
-
-  {/* Save */}
-  <button onClick={handleSave}>
-    <Bookmark className={`w-6 h-6 ${isSaved ? "text-primary" : "text-white"}`} />
-  </button>
-
-</div>
-
+        {/* Save */}
+        <button onClick={handleSave}>
+          <Bookmark className={`w-6 h-6 ${isSaved ? "text-primary" : "text-white"}`} />
+        </button>
+      </div>
 
       {/* Bottom info */}
       <div className="absolute bottom-24 left-0 right-20 p-4 z-10">
@@ -106,16 +103,15 @@ const Feed = () => {
   const [isMutedGlobal, setIsMutedGlobal] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  /* Reset when topic changes */
   useEffect(() => {
     setReels([]);
     setNextToken("");
   }, [selectedTopic]);
 
-  /* Fetch reels */
+  /* Initial load */
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/reels/${selectedTopic}?pageToken=${nextToken}`)
+      .get(`${API_URL}/api/reels/${selectedTopic}?pageToken=`)
       .then((res) => {
         const mapped = res.data.items.map((v: any) => ({
           id: v.id.videoId,
@@ -130,12 +126,12 @@ const Feed = () => {
           },
         }));
 
-        setReels((prev) => [...prev, ...mapped]);
+        setReels(mapped);
         setNextToken(res.data.nextPageToken);
       });
   }, [selectedTopic]);
 
-  /* Scroll detection */
+  /* Scroll loading */
   const handleScroll = () => {
     if (!containerRef.current) return;
 
@@ -145,7 +141,7 @@ const Feed = () => {
 
     if (scrollTop + clientHeight >= scrollHeight - 200 && nextToken) {
       axios
-        .get(`http://localhost:5000/api/reels/${selectedTopic}?pageToken=${nextToken}`)
+        .get(`${API_URL}/api/reels/${selectedTopic}?pageToken=${nextToken}`)
         .then((res) => {
           const mapped = res.data.items.map((v: any) => ({
             id: v.id.videoId,
