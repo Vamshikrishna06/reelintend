@@ -1,73 +1,44 @@
-# Welcome to your Lovable project
+# ReelIntend – Video Recommendation Web Application
 
-## Project info
+## Overview
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**ReelIntend** is a web-based video platform designed to provide personalized video browsing and recommendation features. The application allows users to search videos, like their favorite content, and manage their personalized profiles while exploring trending and category-based video suggestions.
+This project was **developed with the assistance of AI-powered development tools** to accelerate UI design, code generation, and feature implementation.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+* User registration and login authentication
+* Search functionality for videos
+* Like and save favorite videos to user profile
+* Personalized profile displaying liked videos
+* Category-based video browsing
+* Responsive and user-friendly interface
 
-**Use Lovable**
+## Technologies Used
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+* **Frontend:** React.js, HTML, CSS, JavaScript
+* **Backend:** (Update based on your project – Node.js / Firebase / API)
+* **Database:** (Optional – MongoDB / Firebase)
+* **Development Approach:** AI-assisted development tools for faster prototyping and implementation
 
-Changes made via Lovable will be committed automatically to this repo.
+## Usage
 
-**Use your preferred IDE**
+1. Register or log in to the application.
+2. Browse or search videos using the search bar.
+3. Like videos to save them in your profile.
+4. Access your profile to view saved videos and activity.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Applications
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* Personalized video recommendation platforms
+* Content browsing and user engagement systems
+* Learning project for full-stack web application development
 
-Follow these steps:
+## Author
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+* Vamshi B Krishna Melluri
+* B.Tech – Information Technology
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## License
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is created for academic and learning purposes.
